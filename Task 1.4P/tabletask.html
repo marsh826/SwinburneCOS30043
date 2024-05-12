@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>WAI Table Task</title>
+	<meta charset="utf-8">
+	<meta name="language" content="english">
+	<meta name="keywords" content="Accessibility,Lab,Tasks">
+	<meta name="description" content="WAI Table Task">
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+
+        table {
+            width:30%;
+        }
+        </style>
+</head>
+<body>
+    <h1>WAI Table Example</h1>
+
+    <table>
+        <caption>Team Sales from 2013-16 (in millions of $)</caption>
+        <thead>
+            <tr>
+                <!-- <td></td> -->
+                <th scope="col" id="team">Team</th>
+                <th scope="col" id="year1">2013</th>
+                <th scope="col" id="year2">2014</th>
+                <th scope="col" id="year3">2015</th>
+                <th scope="col" id="year4">2016</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <th scope="row" id="alpha">Alpha</th>
+                <td headers="alpha year1">80</td>
+                <td headers="alpha year2">90</td>
+                <td headers="alpha year3">94</td>
+                <td headers="alpha year4">96</td>
+            </tr>
+
+            <tr>
+                <th scope="row" id="bravo">Bravo</th>
+                <td headers="bravo year1">55</td>
+                <td headers="bravo year2">59</td>
+                <td headers="bravo year3">55</td>
+                <td headers="bravo year4">59</td>
+            </tr>
+
+            <tr>
+                <th scope="row" id="charlie">Charlie</th>
+                <td headers="charlie year1">25</td>
+                <td headers="charlie year2">25</td>
+                <td headers="charlie year3">28</td>
+                <td headers="charlie year4">30</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
