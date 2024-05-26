@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Le Gia Hoang An" />
+    <meta name="keywords" content="HTML VueJS" />
+    <meta name="description" content="VueJS String Test" />
+    <title>StringTest</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{message}}</h1>
+      <label for="name">{{prompt}}</label>
+      <input id="name" type="text" v-model="strName" />
+
+      <h5
+        v-if="strName.toLowerCase() == 'le gia hoang an' || strName == 'Le Gia Hoang An'"
+      >
+        {{correctName}}
+      </h5>
+      <h5
+        v-else="strName.toLowerCase() != 'le gia hoang an' || strName != 'Le Gia Hoang An'"
+      >
+        {{strName}} {{wrongName}}
+      </h5>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      var strName = "Le Gia Hoang An";
+
+      Vue.createApp({
+        data() {
+          return {
+            message: "Hello VueJS!",
+            prompt: "Please enter your name: ",
+            strName: strName,
+            correctName: "Awesome name!",
+            wrongName: "is not my name",
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
