@@ -3,7 +3,7 @@ Vue.createApp({
     return {
       title: "Number Guessing Game",
       message: "Start guessing...",
-      numInput: "",
+      numInput: 0,
       answer: Math.floor(Math.random() * 100) + 1,
     };
   },
@@ -26,7 +26,7 @@ Vue.createApp({
     },
     startOver() {
       // Reset every variable
-      this.numInput = "";
+      this.numInput = 0;
       this.answer = Math.floor(Math.random() * 100) + 1;
       this.message = "Start guessing...";
     },
