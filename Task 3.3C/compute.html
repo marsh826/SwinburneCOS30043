@@ -1,52 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="VueJS, HTMl">
-    <meta name="description" content="Calculating bodweight for BMI">
-    <meta name="author" content="Le Gia Hoang An">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="VueJS, HTMl" />
+    <meta name="description" content="Calculating bodweight for BMI" />
+    <meta name="author" content="Le Gia Hoang An" />
     <title>BMI Calculator</title>
   </head>
   <body>
     <div id="app">
-        <h1>{{message}}</h1>
-        <label for="weight">Enter weight in Kilograms: </label>
-            <input type="text" id="weight" name="weight" v-model="numWt"> <br><br>
-        <label for="height">Enter height in Centimetres: </label>
-            <input type="number" id="height" name="height" min="100" max="220" v-model="numHt"><br><br>
+      <h1>{{message}}</h1>
+      <label for="weight">Enter weight in Kilograms: </label>
+      <input type="text" id="weight" name="weight" v-model="numWt" />
+      <br /><br />
+      <label for="height">Enter height in Centimetres: </label>
+      <input
+        type="number"
+        id="height"
+        name="height"
+        min="100"
+        max="220"
+        v-model="numHt"
+      /><br /><br />
 
-        <!-- below 18.5kg -->
-        <p v-if="calculateBMI > 0 && calculateBMI < 18.5">Computed BMI is: {{calculateBMI}} Underweight</p>
-        <!-- 18.5 to below 25 range-->
-        <p v-else-if="calculateBMI >= 18.5 && calculateBMI < 25">Computed BMI is: {{calculateBMI}} Normal weight</p>
-        <!-- 25 to below 30 range  -->
-        <p v-else-if="calculateBMI >= 25 && calculateBMI < 30">Computed BMI is: {{calculateBMI}} Overweight</p>
-        <!-- at least 30 range -->
-        <p v-else-if="calculateBMI >= 30">Computed BMI is: {{calculateBMI}} Obese</p>
-        <!-- no input -->
-        <p v-else> Computed BMI is: None</p>
-
+      <!-- below 18.5kg -->
+      <p v-if="calculateBMI > 0 && calculateBMI < 18.5">
+        Computed BMI is: {{calculateBMI}} Underweight
+      </p>
+      <!-- 18.5 to below 25 range-->
+      <p v-else-if="calculateBMI >= 18.5 && calculateBMI < 25">
+        Computed BMI is: {{calculateBMI}} Normal weight
+      </p>
+      <!-- 25 to below 30 range  -->
+      <p v-else-if="calculateBMI >= 25 && calculateBMI < 30">
+        Computed BMI is: {{calculateBMI}} Overweight
+      </p>
+      <!-- at least 30 range -->
+      <p v-else-if="calculateBMI >= 30">
+        Computed BMI is: {{calculateBMI}} Obese
+      </p>
+      <!-- no input -->
+      <p v-else>Computed BMI is: None</p>
     </div>
 
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./js/vue.js"></script>
+    <!-- HTML5 shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: respond.js doesn't work if you view the page via file:// -->
+    <!-- [if lt IE 9]> -->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!-- <![endif] -->
     <script>
-        Vue.createApp({
-            data() {
-              return {
-                  message: "Compute App",
-                  numHt: 0,
-                  numWt: 0,
-              };
-            },
-            computed:{
-              calculateBMI() {
-                let heightMetres = this.numHt/100;
-                let numBMI = this.numWt/(heightMetres*heightMetres);
-                return numBMI.toFixed(2);
-              },
-            },
-        }).mount("#app");
+      Vue.createApp({
+        data() {
+          return {
+            message: "Compute App",
+            numHt: 0,
+            numWt: 0,
+          };
+        },
+        computed: {
+          calculateBMI() {
+            let heightMetres = this.numHt / 100;
+            let numBMI = this.numWt / (heightMetres * heightMetres);
+            return numBMI.toFixed(2);
+          },
+        },
+      }).mount("#app");
     </script>
   </body>
 </html>

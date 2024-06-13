@@ -19,6 +19,8 @@ Vue.createApp({
 
       if (this.numInput == this.answer) {
         this.message = "You got it!";
+      } else {
+        this.message = "Please enter a number.";
       }
     },
     giveUp() {
