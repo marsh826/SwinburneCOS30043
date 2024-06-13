@@ -9,7 +9,6 @@ body {
 .calculator {
   background-color: rgb(60, 60, 60);
   padding: 30px;
-  max-width: 400px;
 }
 
 #display {
