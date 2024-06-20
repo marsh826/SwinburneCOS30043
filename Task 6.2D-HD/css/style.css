@@ -1,0 +1,39 @@
+body {
+  margin: auto;
+  padding: 0;
+}
+
+.home-top h1 {
+  position: relative;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -500%);
+  width: 100%;
+  text-shadow: 2px 2px #000000;
+}
+
+.coverimage {
+  background-size: cover;
+  background-position: center;
+  height: 450px;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+}
+
+/* .overlay {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+} */
+
+.overlay::after {
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}

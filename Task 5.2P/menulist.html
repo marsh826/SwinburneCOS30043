@@ -3,16 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="keywords" content="HTML, VueJS, JavaScript" />
-    <meta name="description" content="Users to post status on a timeline" />
-    <title>My Post</title>
+    <title>App Menu</title>
   </head>
   <body>
     <div id="app">
-      <app-mypost></app-mypost>
+      <mymenu v-bind:menu="['Home', 'Settings', 'About']"></mymenu>
     </div>
 
     <script src="./js/vue.js"></script>
-    <script src="./js/appmypost.js"></script>
+    <script src="./js/appmenulist.js"></script>
   </body>
 </html>
