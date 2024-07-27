@@ -10,6 +10,36 @@ const Login = {
     };
   },
   methods: {
+    checkForm: function (event) {
+      this.errors = [];
+      let result = true;
+
+      // USERNAME CHECK
+      if (!this.username) {
+        this.errors.push("Username required");
+        result = false;
+      } else if (this.username.length < 3) {
+        this.errors.push("Username must contain at least three characters");
+        result = false;
+      }
+
+      // PASSWORD CHECK
+      if (!this.password) {
+        this.errors.push("Password required");
+        result = false;
+      } else if (this.password.length < 8) {
+        this.errors.push("Password must contain at least eight characters");
+        result = false;
+      } else if (!this.specialCharCount(this.password)) {
+        this.errors.push("Password must contain at least 1 special character");
+        result = false;
+      }
+
+      // prevent form submission
+      if (result === false) {
+        event.preventDefault();
+      }
+    },
     login() {
       var self = this;
       const requestOptions = {

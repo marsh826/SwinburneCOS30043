@@ -29,7 +29,7 @@ const DeleteData = {
     `,
   data: function () {
     return {
-      deleteUnitCode: "COS12389",
+      deleteUnitCode: "COS12345",
       messsage: "",
       statusVal: "",
       statusText: "",

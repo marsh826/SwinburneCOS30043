@@ -21,7 +21,7 @@ const InsertData = {
                         <label for="unitType" class="form-label">Type</label>
                         <input type="text" class="form-control" id="unitType"  v-model="unitType">
                     </div>
-                    <button type="submit" v-on:click="postData(unitCode, unitDesc, unitCP, unitType)" class="btn btn-primary">Submit</button>
+                    <button type="button" v-on:click="checkForm(unitCode, unitDesc, unitCP, unitType)" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
@@ -52,6 +52,44 @@ const InsertData = {
     };
   },
   methods: {
+    checkForm(unitCode, unitDesc, unitCP, unitType) {
+      let result = true;
+      let regex = /^[a-zA-Z]+$/;
+      var self = this;
+
+      if (!unitCode) {
+        self.messsage = "Unit Code required";
+        result = false;
+      }
+
+      if (!unitDesc) {
+        self.messsage = "Unit Code required";
+        result = false;
+      } else if (!regex.test(unitDesc)) {
+        self.messsage = "Description must only contains alphabetic characters";
+      }
+
+      if (!unitCP) {
+        self.messsage = "Credit point required";
+        result = false;
+      } else if (isNaN(unitCP)) {
+        result = false;
+        self.messsage = "Credit point code must be numberic";
+      }
+
+      if (!unitType) {
+        self.messsage = "Unit Type required";
+        result = false;
+      } else if (!regex.test(unitType)) {
+        self.messsage = "Description must only contains alphabetic characters";
+      }
+
+      // prevent form submission
+      if (result === true) {
+        self.postData(unitCode, unitDesc, unitCP, unitType);
+      } else {
+      }
+    },
     postData: function (code, desc, cp, type) {
       var insertApiURL = "resources/apis.php/";
       var self = this;
@@ -68,7 +106,6 @@ const InsertData = {
           unitType: type,
         }),
       };
-
       fetch(insertApiURL, requestOptions)
         .then((response) => {
           self.statusVal = response.status;

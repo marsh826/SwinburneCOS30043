@@ -21,7 +21,7 @@ const UpdateData = {
                         <label for="updateType" class="form-label">Type</label>
                         <input type="text" class="form-control" id="updateType"  v-model="updateType">
                     </div>
-                    <button type="submit" v-on:click="updateData(updateCode, updateDesc, updateCP, updateType)" class="btn btn-primary">Submit</button>
+                    <button type="submit" v-on:click="checkForm(updateCode, updateDesc, updateCP, updateType)" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
@@ -82,6 +82,44 @@ const UpdateData = {
         .catch((error) => {
           self.messsage = "Error: " + error;
         });
+    },
+    checkForm(unitCode, unitDesc, unitCP, unitType) {
+      let result = true;
+      let regex = /^[a-zA-Z]+$/;
+      var self = this;
+
+      if (!unitCode) {
+        self.messsage = "Unit Code required";
+        result = false;
+      }
+
+      if (!unitDesc) {
+        self.messsage = "Unit Code required";
+        result = false;
+      } else if (!regex.test(unitDesc)) {
+        self.messsage = "Description must only contains alphabetic characters";
+      }
+
+      if (!unitCP) {
+        self.messsage = "Credit point required";
+        result = false;
+      } else if (isNaN(unitCP)) {
+        result = false;
+        self.messsage = "Credit point code must be numberic";
+      }
+
+      if (!unitType) {
+        self.messsage = "Unit Type required";
+        result = false;
+      } else if (!regex.test(unitType)) {
+        self.messsage = "Description must only contains alphabetic characters";
+      }
+
+      // prevent form submission
+      if (result === true) {
+        self.updateData(unitCode, unitDesc, unitCP, unitType);
+      } else {
+      }
     },
   },
 };
