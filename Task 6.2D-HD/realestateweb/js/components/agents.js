@@ -18,8 +18,12 @@ const Agents = {
         return response.json(); //convert json body -> js object
       })
       .then((data) => {
+        // let dataFix = data;
+        // let ImageData = dataFix.AgentImage;
+        // console.log(ImageData);
+
         self.team = data;
-        console.log(data);
+        console.log(dataFix);
       })
       .catch((err) => {
         console.log(err);
@@ -32,7 +36,7 @@ const Agents = {
         <div class="card mb-3 rounded-5">
             <div class="row g-0">
                 <div class="col-md-4">
-                <img v-bind:src="agent.AgentImage.url" class="img-fluid rounded-start ps-5 img-resize" alt="imageAgents">
+                <img v-bind:src="agent.AgentImage" class="img-fluid rounded-start ps-5 img-resize" alt="imageAgents">
                 </div>
                 <div class="col-md-8">
                 <div class="card-body">

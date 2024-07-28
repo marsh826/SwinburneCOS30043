@@ -86,7 +86,7 @@ const Home = {
             <div class="carousel-inner">
               <div v-for="(agent, index) in agents" :key="agent.AgentID" :class="{ 'carousel-item': true, 'active': index === 0 }">
                 <div class="card d-flex justify-content-center align-items-center">
-                  <img :src="agent.AgentImage.url" class="d-block w-100" alt="agentImageProfile">
+                  <img v-bind:src="agent.AgentImage" class="d-block w-100" alt="agentImageProfile">
                   <div class="card-body">
                     <h5 class="card-title">{{agent.FirstName}} {{agent.LastName}}</h5>
                     <p class="card-text"><strong>Phone Number:</strong> {{agent.Phone}}</p>
