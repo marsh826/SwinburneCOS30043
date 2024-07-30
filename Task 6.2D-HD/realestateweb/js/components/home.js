@@ -76,7 +76,7 @@ const Home = {
         <!-- Home Bottom Section  -->
         <h1 class="text-center">Meet the IAGO Agents</h1>
         <div class="d-flex justify-content-center align-items-center">
-          <div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
+          <div id="carouselExampleControls" class="carousel slide carousel-dark w-75" data-bs-ride="carousel">
             <div class="carousel-indicators">
               <button v-for="(agent, index) in agents" :key="index" type="button" 
                       :data-bs-target="'#carouselExampleControls'" :data-bs-slide-to="index"
@@ -86,13 +86,14 @@ const Home = {
             <div class="carousel-inner">
               <div v-for="(agent, index) in agents" :key="agent.AgentID" :class="{ 'carousel-item': true, 'active': index === 0 }">
                 <div class="card d-flex justify-content-center align-items-center">
-                  <img v-bind:src="agent.AgentImage" class="d-block w-100" alt="agentImageProfile">
-                  <div class="card-body">
+                  <img v-bind:src="agent.AgentImage" class="d-block img-resize pt-3" alt="agentImageProfile">
+                  <div class="card-body pb-5 px-5">
                     <h5 class="card-title">{{agent.FirstName}} {{agent.LastName}}</h5>
                     <p class="card-text"><strong>Phone Number:</strong> {{agent.Phone}}</p>
                     <p class="card-text"><strong>Email:</strong> {{agent.Email}}</p>
                     <p class="card-text"><strong>License Number:</strong> {{agent.LicenseNumber}}</p>
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -106,7 +107,7 @@ const Home = {
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
             </button>
-            
+
           </div>
         </div>
   

@@ -1,7 +1,14 @@
 const Buy = {
+  components: {
+    paginate: VuejsPaginateNext,
+  },
   data() {
     return {
       properties: [],
+      perPage: 3,
+      currentPage: 1,
+      message: "Loading...",
+      isLoading: false,
     };
   },
   created() {
@@ -27,16 +34,16 @@ const Buy = {
       });
   },
   template: `
-    <h1>Properties Available For Sale</h1>
-    <div v-for="house in properties" :key="house.PropertyID">
+  <h1>Properties Available For Sale</h1>
+    <div v-for="house in getItems" :key="house.PropertyID">
       <div class="card mb-3 rounded-5">
         <div class="row g-0">
           <div class="col-md-4">
-            <img v-bind:src="house.Image.url" class="img-fluid rounded-start ps-5" alt="imageHouse">
+            <img v-bind:src="house.Image" class="img-fluid rounded-start ps-5 img-property" alt="imageHouse">
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">ListingPrice: &#36;{{house.ListingPrice}}</h5>
+              <h5 class="card-title">ListingPrice: &#36;{{numberWithCommas(house.ListingPrice)}}</h5>
               <p class="card-text"><small class="text-body-secondary">Status: <strong class="text-success">{{house.Status}}</strong></small></p>
               <p class="card-text"><small class="text-body-secondary">Agent: <strong>{{house.FirstName}} {{house.LastName}}</strong></small></p>
               <div class="row">
@@ -77,5 +84,34 @@ const Buy = {
         </div>
       </div>
     </div>
-    `,
+    <paginate
+      :page-count="getPageCount"
+      :page-range="2"
+      :margin-pages="1"
+      :click-handler="clickCallBack"
+      :prev-text=" 'Previous' "
+      :next-text=" 'Next' "
+      :container-class="'pagination'"
+      :page-class="'page-item'"
+    >
+    </paginate>
+  `,
+  computed: {
+    getItems: function () {
+      let current = this.currentPage * this.perPage;
+      let start = current - this.perPage;
+      return this.properties.slice(start, current);
+    },
+    getPageCount: function () {
+      return Math.ceil(this.properties.length / this.perPage);
+    },
+  },
+  methods: {
+    clickCallBack: function (pageNum) {
+      this.currentPage = Number(pageNum);
+    },
+    numberWithCommas: function (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+  },
 };

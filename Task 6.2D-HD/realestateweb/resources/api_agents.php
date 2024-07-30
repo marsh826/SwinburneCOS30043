@@ -5,7 +5,7 @@
 // Use this API for demonstration purposes only
 
 // connect to the mysql database, provide the appropriate credentials
-$conn = mysqli_connect('localhost:3309', 'root', '', 'realestate');
+$conn = mysqli_connect('localhost', 'root', '', 'realestate');
 mysqli_set_charset($conn, 'utf8');
 $response = array();
 $i = 0;

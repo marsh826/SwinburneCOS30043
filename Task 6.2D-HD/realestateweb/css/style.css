@@ -22,6 +22,15 @@
 }
 
 .img-resize {
-  width: 15em;
-  height: 12em;
+  width: 25em;
+  height: 22em;
+}
+
+.img-property {
+  width: 25em;
+  height: 15em;
+}
+
+.min-vh-76 {
+  min-height: 76vh;
 }

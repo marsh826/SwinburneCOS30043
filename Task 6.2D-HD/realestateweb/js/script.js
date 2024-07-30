@@ -41,21 +41,24 @@ const router = VueRouter.createRouter({
 const app = Vue.createApp({
   data: function () {
     return {
-      authenticated: false,
+      isAuthenticated: false,
       authenticatedUser: "",
       error: false,
       errorMSG: "",
     };
   },
   mounted() {
-    this.$router.replace({ name: "home" });
+    if (!this.isAuthenticated) {
+      this.$router.replace({ name: "home" });
+    }
   },
-  method: {
+  methods: {
     setAuthenticated(status) {
-      this.authenticated = status;
+      this.isAuthenticated = status;
     },
     logout() {
-      this.authenticated = false;
+      this.isAuthenticated = false;
+      this.$router.push({ name: "login" });
     },
   },
 });
@@ -100,24 +103,47 @@ app.component("app-navbar", {
                     Agents  
                   </router-link>
                 </li>
+                <li class="nav-item" v-if="isAuthenticated">
+                  <router-link to="/dashboard"
+                    class="nav-link text-white"
+                  >
+                    Dashboard
+                  </router-link>
+                </li>
               </ul>
-              <div class="d-flex">
+            </div>
+            <div class="d-flex" v-if="isAuthenticated">
+                <button class="btn btn-info me-2" type="button" v-on:click="logout()">
+                  Logout 
+                </button>
+            </div>
+            <div class="d-flex" v-else>
                 <button class="btn btn-info me-2" type="button">
                   <router-link to="/login"
                     class="link-offset-2 link-underline link-underline-opacity-0"
                   >Login  
                   </router-link>
                 </button>
-              </div>
             </div>
-          </div>
+          </div>  
         </nav>
       `,
+  computed: {
+    isAuthenticated() {
+      console.log(this.$root.isAuthenticated);
+      return this.$root.isAuthenticated;
+    },
+  },
+  methods: {
+    logout() {
+      this.$root.logout();
+    },
+  },
 });
 
 app.component("app-footer", {
   template: `
-    <footer class="py-3 bg-primary bg-gradient">
+    <footer class="py-3 bg-primary bg-gradient mt-auto">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
           <li class="nav-item">
             <router-link to="/home" class="nav-link text-white">
@@ -132,18 +158,10 @@ app.component("app-footer", {
     `,
 });
 
+app.component("app-view", ViewProperties);
+app.component("app-insert", InsertProperties);
+app.component("app-delete", DeleteProperties);
+app.component("app-update", UpdateProperties);
+
 app.use(router);
 app.mount("#app");
-
-{
-  /* <router-link to="/agents"
-class="link-offset-2 link-underline link-underline-opacity-0"
->Agents  
-</router-link>
-
-{
-  path: "/agents",
-  component: Agents,
-  name: "agents",
-}, */
-}
