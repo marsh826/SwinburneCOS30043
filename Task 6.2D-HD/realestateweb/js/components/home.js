@@ -4,7 +4,7 @@ const Home = {
       agents: [],
     };
   },
-  created() {
+  mounted() {
     var self = this;
     var viewApiURL = "resources/api_agents.php?action=agentsDisplay";
 

@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="keywords" content="jQuery, HTML, VueJS" />
-    <meta name="description" content="jQuery practice with API" />
-    <title>VUE getJSON</title>
-  </head>
-  <body>
-    <div id="app">
-      <p v-if="isLoading">{{message}}</p>
-      <ul v-for="p in posts">
-        <li>ID: {{p.id}}</li>
-        <li>Body: {{p.body}}</li>
-      </ul>
-    </div>
 
-    <script src="./js/vue.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.js"
-      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      const app = Vue.createApp({
-        data() {
-          return {
-            message: "Loading...",
-            isLoading: false,
-            posts: [],
-          };
-        },
-        mounted() {
-          const self = this;
-          $.getJSON("https://jsonplaceholder.typicode.com/posts", (data) => {
-            self.posts = data;
-            console.log(data);
-          }).fail((err) => {
-            console.log(err);
-          });
-        },
-      });
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="jQuery, HTML, VueJS">
+  <meta name="description" content="jQuery practice with API">
+  <title>VUE getJSON</title>
+</head>
 
-      app.mount("#app");
-    </script>
-  </body>
+<body>
+  <div id="app">
+    <p v-if="isLoading">{{message}}</p>
+    <ul v-for="p in posts">
+      <li>ID: {{p.id}}</li>
+      <li>Body: {{p.body}}</li>
+    </ul>
+  </div>
+
+  <script src="./js/vue.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          message: "Loading...",
+          isLoading: false,
+          posts: [],
+        };
+      },
+      mounted() {
+        const self = this;
+        $.getJSON("https://jsonplaceholder.typicode.com/posts", (data) => {
+          self.posts = data;
+          console.log(data);
+        }).fail((err) => {
+          console.log(err);
+        });
+      },
+    });
+
+    app.mount("#app");
+  </script>
+</body>
+
 </html>

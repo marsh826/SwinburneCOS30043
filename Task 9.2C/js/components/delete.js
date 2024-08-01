@@ -16,14 +16,14 @@ const DeleteData = {
         </div>
 
         <div class ="col-12 col-md-6">
-            <div class="card mx-auto" max-width="90%">
-            <div class="card-body">
+          <div class="card mx-auto" max-width="90%">
+              <div class="card-body">
                 <p>Output Message : {{ messsage }}</p>
-   			    <p>Status Code: {{statusVal}}</p>
-   			    <p>Status: {{statusText}}</p>
-   			    <p>Response Headers: {{headers}}</p>  
-            </div>
-            </div>
+                <p>Status Code: {{statusVal}}</p>
+                <p>Status: {{statusText}}</p>
+                <p>Response Headers: {{headers}}</p>  
+              </div>
+          </div>
         </div>
     </div>  
     `,

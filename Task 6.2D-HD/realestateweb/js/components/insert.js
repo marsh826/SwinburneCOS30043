@@ -4,146 +4,128 @@ const InsertProperties = {
         <div class="col">
         <div class="card mx-auto" max-width="90%">
             <div class="card-body">
-                <form @submit="checkForm">
+                <form @submit.prevent="checkForm">
                     <div class="mb-3">
                       <label for="address" class="form-label"><strong>Address</strong></label>
                       <input type="text" class="form-control" id="address" v-model="address">
-                        <div v-if="errors.address" class="invalid-feedback">
-                          {{errors.address}}
-                        </div>
+                      <div v-if="errorsAddress" class="form-text text-danger">
+                        <p>{{ errorsAddress }}</p>
+                      </div>
                     </div>
 
                     <div class="mb-3">
                       <label for="city" class="form-label"><strong>City</strong></label>
                       <input type="text" class="form-control" id="city" v-model="city">
-                        <div v-if="errors.city" class="invalid-feedback">
-                          {{errors.city}}
-                        </div>
-                    </div>
-         
+                      <div v-if="errorsCity" class="form-text text-danger">
+                        <p>{{ errorsCity }}</p>
+                      </div>
+                    </div> 
+
                     <div class="mb-3">
                       <label for="state" class="form-label"><strong>State</strong></label>
-                      <input type="text" class="form-control" id="state"  v-model="state">
-                        <div v-if="errors.state" class="invalid-feedback">
-                          {{errors.state}}
-                        </div>
+                      <input type="text" class="form-control" id="state" v-model="state">
+                      <div v-if="errorsState" class="form-text text-danger">
+                        <p>{{ errorsState }}</p>
+                      </div>
                     </div>
 
                     <div class="mb-3">
                       <label for="postcode" class="form-label"><strong>Post Code</strong></label>
-                      <input type="text" class="form-control" id="postcode"  v-model="postcode">
-                        <div v-if="errors.postcode" class="invalid-feedback">
-                          {{errors.postcode}}
-                        </div>
+                      <input type="text" class="form-control" id="postcode" v-model="postcode">
+                      <div v-if="errorsPostCode" class="form-text text-danger">
+                        <p>{{ errorsPostCode }}</p>
+                      </div>
                     </div>
-     
+
                     <div class="mb-3">
                       <label for="price" class="form-label"><strong>Listing Price</strong></label>
-                      <input type="text" class="form-control" id="price"  v-model="price">
-                        <div v-if="errors.price" class="invalid-feedback">
-                          {{errors.price}}
-                        </div>                      
+                      <input type="text" class="form-control" id="price" v-model="price">
+                      <div v-if="errorsPrice" class="form-text text-danger">
+                        <p>{{ errorsPrice }}</p>
+                      </div>
                     </div>
 
                     <div class="mb-3">
                       <label for="squareM2" class="form-label"><strong>Square Footage</strong></label>
-                      <input type="text" class="form-control" id="squareM2"  v-model="squareM2">
-                        <div v-if="errors.squareM2" class="invalid-feedback">
-                          {{errors.squareM2}}
-                        </div>                     
+                      <input type="text" class="form-control" id="squareM2" v-model="squareM2">
+                      <div v-if="errorsSquareM2" class="form-text text-danger">
+                        <p>{{ errorsSquareM2 }}</p>
+                      </div>
                     </div>
 
                     <div class="mb-3">
-                       <label for="bedrooms" class="form-label"><strong>Bedrooms</strong></label>
-                      <input type="text" class="form-control" id="bedrooms"  v-model="bedrooms">
-                        <div v-if="errors.bedrooms" class="invalid-feedback">
-                          {{errors.bedrooms}}
-                        </div> 
+                      <label for="bedrooms" class="form-label"><strong>Bedrooms</strong></label>
+                      <input type="text" class="form-control" id="bedrooms" v-model="bedrooms">
+                      <div v-if="errorsBedrooms" class="form-text text-danger">
+                        <p>{{ errorsBedrooms }}</p>
                       </div>
+                    </div>
 
                     <div class="mb-3">
                       <label for="bathrooms" class="form-label"><strong>Bathrooms</strong></label>
-                      <input type="text" class="form-control" id="bathrooms"  v-model="bathrooms">
-                        <div v-if="errors.bathrooms" class="invalid-feedback">
-                          {{errors.bathrooms}}
-                        </div>                     
+                      <input type="text" class="form-control" id="bathrooms" v-model="bathrooms">
+                      <div v-if="errorsBathrooms" class="form-text text-danger">
+                        <p>{{ errorsBathrooms }}</p>
                       </div>
-                
+                    </div>
+
                     <div class="mb-3">
                       <label for="garages" class="form-label"><strong>Garages</strong></label>
-                      <input type="text" class="form-control" id="garages"  v-model="garages">
-                        <div v-if="errors.garages" class="invalid-feedback">
-                          {{errors.garages}}
-                        </div> 
+                      <input type="text" class="form-control" id="garages" v-model="garages">
+                      <div v-if="errorsGarages" class="form-text text-danger">
+                        <p>{{ errorsGarages }}</p>
                       </div>
+                    </div>
 
                     <div class="mb-3">
                       <label for="image" class="form-label"><strong>Image</strong></label>
                       <input type="file" class="form-control" id="image" v-on:change="handleFileUpload">
-                      <div v-if="errors.image" class="invalid-feedback">
-                        {{errors.image}}
+                      <div v-if="errorsImage" class="form-text text-danger">
+                        <p>{{ errorsImage }}</p>
                       </div>
-                    </div>
-
+                    </div>  
 
                     <p class="form-label"><strong>Agent</strong></p>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="agentRadio" 
-                            id="danni" v-model="agentID" value="1">
-                        <label class="form-check-label" for="danni">
-                            Danni Korda
-                        </label>
+                        <input class="form-check-input" type="radio" name="agentRadio" id="danni" v-model="agentID" value="1">
+                        <label class="form-check-label" for="danni">Danni Korda</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="agentRadio"
-                            id="cindee" v-model="agentID" value="2">
-                        <label class="form-check-label" for="cindee">
-                            Cindee Raubenheim
-                        </label>
+                        <input class="form-check-input" type="radio" name="agentRadio" id="cindee" v-model="agentID" value="2">
+                        <label class="form-check-label" for="cindee">Cindee Raubenheim</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="agentRadio" 
-                            id="krystel" v-model="agentID" value="3">
-                        <label class="form-check-label" for="krystel">
-                            Krystel Dobbson
-                        </label>
+                        <input class="form-check-input" type="radio" name="agentRadio" id="krystel" v-model="agentID" value="3">
+                        <label class="form-check-label" for="krystel">Krystel Dobbson</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="agentRadio" 
-                            id="eduino" v-model="agentID" value="4">
-                        <label class="form-check-label" for="eduino">
-                            Eduino Kuna
-                        </label>
+                        <input class="form-check-input" type="radio" name="agentRadio" id="eduino" v-model="agentID" value="4">
+                        <label class="form-check-label" for="eduino">Eduino Kuna</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="agentRadio" 
-                            id="nealson" v-model="agentID" value="5">
-                        <label class="form-check-label" for="nealson">
-                            Nealson Morville
-                        </label>
+                        <input class="form-check-input" type="radio" name="agentRadio" id="nealson" v-model="agentID" value="5">
+                        <label class="form-check-label" for="nealson">Nealson Morville</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="agentRadio" 
-                            id="charlena" v-model="agentID" value="6">
-                        <label class="form-check-label" for="charlena">
-                            Charlena Castelyn
-                        </label>
+                        <input class="form-check-input" type="radio" name="agentRadio" id="charlena" v-model="agentID" value="6">
+                        <label class="form-check-label" for="charlena">Charlena Castelyn</label>
                     </div>
-                        <div v-if="errors.agentID" class="invalid-feedback">
-                          {{errors.agentID}}
-                        </div>                                         
-                    <button type="button" v-on:click="insertProperty()" 
-                        class="btn btn-primary">
-                            Submit
-                    </button>
+                    <div v-if="errorsAgentID" class="form-text text-danger">
+                        <p>{{ errorsAgentID }}</p>
+                    </div>                                         
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div v-if="messages" class="alert alert-success mt-2">
+                        <p>{{ messages }}</p> 
+                    </div>
                 </form>
             </div>
         </div>
         </div>
     </div>
-    `,
+  `,
   data: function () {
     return {
+      //PRESET DATA for testing insert function
       address: "31 Ann Moore",
       city: "Melbourne",
       state: "Victoria",
@@ -156,112 +138,141 @@ const InsertProperties = {
       status: "Available",
       image: null,
       agentID: "3",
-      //error list
-      errors: {},
+      messages: "",
+
+      //EMPTY DATA for testing form validation
+      // address: "",
+      // city: "",
+      // state: "",
+      // postcode: "",
+      // price: "",
+      // squareM2: "",
+      // bedrooms: "",
+      // bathrooms: "",
+      // garages: "",
+      // status: "",
+      // image: null,
+      // agentID: "",
+      // messages: "",
+
+      errorsAddress: "", //error list
+      errorsCity: "",
+      errorsState: "",
+      errorsPostCode: "",
+      errorsPrice: "",
+      errorsSquareM2: "",
+      errorsBedrooms: "",
+      errorsBathrooms: "",
+      errorsGarages: "",
+      errorsAgentID: "",
+      errorsImage: "",
     };
   },
   methods: {
     handleFileUpload(event) {
       this.image = event.target.files[0];
     },
-    checkForm(event) {
-      let result = true;
+    checkForm() {
+      this.errorsAddress = "";
+      this.errorsCity = "";
+      this.errorsState = "";
+      this.errorsPostCode = "";
+      this.errorsPrice = "";
+      this.errorsSquareM2 = "";
+      this.errorsBedrooms = "";
+      this.errorsBathrooms = "";
+      this.errorsGarages = "";
+      this.errorsAgentID = "";
+      this.errorsImage = "";
+
       let regex = /^[a-zA-Z]+$/;
-      var self = this;
-      self.errors = {};
+      let isValid = true;
 
-      if (!self.address) {
-        self.errors.address = "Address required";
-        result = false;
+      if (!this.address) {
+        this.errorsAddress = "Address required";
+        isValid = false;
       }
 
-      if (!self.city) {
-        self.errors.city = "City required";
-        result = false;
-      } else if (!regex.test(self.city)) {
-        self.errors.city = "City must only contains alphabetic characters";
+      if (!this.city) {
+        this.errorsCity = "City required";
+        isValid = false;
+      } else if (!regex.test(this.city)) {
+        this.errorsCity = "City must only contain alphabetic characters";
+        isValid = false;
       }
 
-      if (!self.state) {
-        self.errors.state = "State required";
-        result = false;
-      } else if (!regex.test(self.state)) {
-        self.errors.state = "State must only contains alphabetic characters";
+      if (!this.state) {
+        this.errorsState = "State required";
+        isValid = false;
+      } else if (!regex.test(this.state)) {
+        this.errorsState = "State must only contain alphabetic characters";
+        isValid = false;
       }
 
-      if (!self.postcode) {
-        self.errors.postcode = "Post Code required";
-        result = false;
-      } else if (isNaN(self.postcode)) {
-        result = false;
-        self.errors.postcode = "Post Code must be numberic";
+      if (!this.postcode) {
+        this.errorsPostCode = "Post Code required";
+        isValid = false;
+      } else if (isNaN(this.postcode)) {
+        this.errorsPostCode = "Post Code must be numeric";
+        isValid = false;
       }
 
-      if (!self.price) {
-        self.errors.price = "Price required";
-        result = false;
-      } else if (isNaN(self.price)) {
-        result = false;
-        self.errors.price = "Price must be numberic";
+      if (!this.price) {
+        this.errorsPrice = "Price required";
+        isValid = false;
+      } else if (isNaN(this.price)) {
+        this.errorsPrice = "Price must be numeric";
+        isValid = false;
       }
 
-      if (!self.squareM2) {
-        self.errors.squareM2 = "Square Footage required";
-        result = false;
-      } else if (isNaN(self.squareM2)) {
-        result = false;
-        self.errors.squareM2 = "Square Footage must be numberic";
+      if (!this.squareM2) {
+        this.errorsSquareM2 = "Square Footage required";
+        isValid = false;
+      } else if (isNaN(this.squareM2)) {
+        this.errorsSquareM2 = "Square Footage must be numeric";
+        isValid = false;
       }
 
-      if (!self.bedrooms) {
-        self.errors.bedrooms = "Bedrooms required";
-        result = false;
-      } else if (isNaN(self.bedrooms)) {
-        result = false;
-        self.errors.bedrooms = "Bedrooms must be numberic";
+      if (!this.bedrooms) {
+        this.errorsBedrooms = "Bedrooms required";
+        isValid = false;
+      } else if (isNaN(this.bedrooms)) {
+        this.errorsBedrooms = "Bedrooms must be numeric";
+        isValid = false;
       }
 
-      if (!self.bathrooms) {
-        self.errors.bathrooms = "Bathrooms required";
-        result = false;
-      } else if (isNaN(self.bathrooms)) {
-        result = false;
-        self.errors.bathrooms = "Bathrooms must be numberic";
+      if (!this.bathrooms) {
+        this.errorsBathrooms = "Bathrooms required";
+        isValid = false;
+      } else if (isNaN(this.bathrooms)) {
+        this.errorsBathrooms = "Bathrooms must be numeric";
+        isValid = false;
       }
 
-      if (!self.garages) {
-        self.errors.garages = "Garages required";
-        result = false;
-      } else if (isNaN(self.garages)) {
-        result = false;
-        self.errors.garages = "Garages must be numberic";
+      if (!this.garages) {
+        this.errorsGarages = "Garages required";
+        isValid = false;
+      } else if (isNaN(this.garages)) {
+        this.errorsGarages = "Garages must be numeric";
+        isValid = false;
       }
 
-      if (!self.status) {
-        self.errors.status = "Status required";
-        result = false;
-      } else if (!regex.test(self.status)) {
-        self.errors.status = "Status must only contains alphabetic characters";
+      if (this.image === null) {
+        this.errorsImage = "Image required";
+        isValid = false;
       }
 
-      if (self.image === null) {
-        self.errors.image = "Image required";
-        result = false;
+      if (!this.agentID) {
+        this.errorsAgentID = "Agent required";
+        isValid = false;
       }
 
-      if (!self.agentID) {
-        self.errors.agentID = "Agent required";
-        result = false;
-      }
-
-      // prevent form submission
-      if (result === false) {
-        event.preventDefault();
+      if (isValid) {
+        this.insertProperty();
       }
     },
     insertProperty: function () {
       var insertApiURL = "resources/apis.php?action=addNewProperty";
-      var self = this;
       const today = new Date();
 
       //   date is automatically set as today
@@ -282,9 +293,10 @@ const InsertProperties = {
       formData.append("Image", this.image);
       formData.append("AgentID", this.agentID);
 
-      for (let pair of formData.entries()) {
-        console.log(`${pair[0]}: ${pair[1]}`);
-      }
+      // For debugging only
+      //   for (let pair of formData.entries()) {
+      //     console.log(`${pair[0]}: ${pair[1]}`);
+      //   }
 
       const requestOptions = {
         method: "POST",
@@ -293,19 +305,15 @@ const InsertProperties = {
       fetch(insertApiURL, requestOptions)
         .then((response) => {
           console.log(response.status);
-          console.log(statusText);
+          console.log(response.statusText);
           console.log(response.headers);
-          console.log(response.json);
+          this.messages = "Data Inserted Successfully.";
           if (!response.ok) {
             throw new Error("Network response error");
           }
-          return response.json();
-        })
-        .then((data) => {
-          self.messsage = "Data Inserted Successfully.";
         })
         .catch((error) => {
-          self.messsage = "Server Error - Data Inserted Unsuccessfully";
+          this.messages = "Server Error - Data Inserted Unsuccessfully";
         });
     },
     formatDate: function (date) {

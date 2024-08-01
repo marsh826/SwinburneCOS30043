@@ -7,9 +7,9 @@ const router = VueRouter.createRouter({
       name: "agents",
     },
     {
-      path: "/buy",
-      component: Buy,
-      name: "buy",
+      path: "/properties",
+      component: Properties,
+      name: "properties",
     },
     {
       path: "/dashboard",
@@ -25,11 +25,6 @@ const router = VueRouter.createRouter({
       path: "/login",
       component: Login,
       name: "login",
-    },
-    {
-      path: "/sold",
-      component: Sold,
-      name: "sold",
     },
     {
       path: "/logout",
@@ -83,17 +78,10 @@ app.component("app-navbar", {
                   </router-link>
                 </li>
                 <li class="nav-item">
-                  <router-link to="/buy"
+                  <router-link to="/properties"
                     class="nav-link text-white"
                   >
-                    Buy 
-                  </router-link>
-                </li>
-                <li class="nav-item">
-                  <router-link to="/sold"
-                    class="nav-link text-white"
-                  >
-                    Sold 
+                    Properties
                   </router-link>
                 </li>
                 <li class="nav-item">

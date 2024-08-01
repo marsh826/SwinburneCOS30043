@@ -11,7 +11,7 @@ const Agents = {
       isLoading: false,
     };
   },
-  created() {
+  mounted() {
     var self = this;
     var viewApiURL = "resources/api_agents.php?action=agentsDisplay";
 
@@ -41,7 +41,7 @@ const Agents = {
       <div class="card mb-3 rounded-5">
           <div class="row g-0">
               <div class="col-md-4">
-              <img v-bind:src="agent.AgentImage" class="img-fluid rounded-start ps-5 img-resize" alt="imageAgents">
+              <img v-bind:src="agent.AgentImage" class="img-fluid rounded-start img-resize" alt="imageAgents">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
@@ -61,6 +61,13 @@ const Agents = {
                         <p class="card-text fs-3 text"> <strong>License Number:</strong> {{agent.LicenseNumber}}</p>
                         </div>
                     </div>
+                    </div>
+                    <br>
+
+                    <div class="d-inline">
+                      <i class="fa fa-thumbs-up fs-2 text"></i>
+                      <i class="fs-3 text px-2">{{agent.Votes}}</i>
+                      <button class="btn btn-primary" type="button" v-on:click="newVote(agent.AgentID)">Up Vote</button>
                     </div>
                 </div>
               </div>
@@ -92,6 +99,33 @@ const Agents = {
   methods: {
     clickCallBack: function (pageNum) {
       this.currentPage = Number(pageNum);
+    },
+    newVote: function (id) {
+      // For debugging
+      console.log("Agent ID fetched:" + id);
+      var updateApiURL = "resources/apis.php?action=updateVotes";
+
+      const formData = new FormData();
+      formData.append("AgentID", id);
+
+      const requestOptions = {
+        method: "POST",
+        body: formData,
+      };
+      fetch(updateApiURL, requestOptions)
+        .then((response) => {
+          console.log(formData);
+          console.log(response.status);
+          console.log(response.statusText);
+          console.log(response.headers);
+          console.log("Data Updated Successfully.");
+          if (!response.ok) {
+            throw new Error("Network response error");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
