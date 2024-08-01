@@ -5,7 +5,7 @@
 // Use this API for demonstration purposes only
 
 // connect to the mysql database, provide the appropriate credentials
-$conn = mysqli_connect('localhost', 'root', '', 'realestate');
+$conn = mysqli_connect('localhost:3309', 'root', '', 'realestate');
 mysqli_set_charset($conn, 'utf8');
 $response = array();
 $i = 0;
@@ -14,7 +14,7 @@ if ($conn) {
 	switch ($_GET['action']) {
 			//////////////////////////////Display in AGENT page//////////////////////////////////////
 		case 'agentsDisplay':
-			$_SERVER['REQUEST_METHOD'] == 'GET';
+			$_SERVER['REQUEST_METHOD'] === "GET";
 			$sql = "SELECT * FROM agents";
 			$result = mysqli_query($conn, $sql);
 			if ($result) {
@@ -31,39 +31,58 @@ if ($conn) {
 				}
 				echo json_encode($response);
 			}
-		break;
-		/////////////////////////////////////Update votes for selected agent///////////////////////////
+			break;
+			/////////////////////////////////////Update votes for selected agent///////////////////////////
 		case 'updateVotes':
-			if ($_SERVER['REQUEST_METHOD'] == "POST") {
-				$agentID = $_POST['AgentID'];	
-				$sql = "UPDATE agents SET Votes = Votes + 1 WHERE AgentID = ?"; 
+			if ($_SERVER['REQUEST_METHOD'] === "POST") {
+				$agentID = $_POST['AgentID'];
+				$sql = "UPDATE agents SET Votes = Votes + 1 WHERE AgentID = ?";
 				$stmt = $conn->prepare($sql);
 				$stmt->bind_param("s", $agentID);
-		
+
 				// Debugging output
 				echo "AgentID: " . $agentID . "\n";
-		
+
 				if ($stmt->execute()) {
-					// Check the number of affected rows
-					if ($stmt->affected_rows > 0) {
-						http_response_code(202);
-						echo json_encode(["message" => "Votes updated successfully"]);
-					} else {
-						http_response_code(200);
-						echo json_encode(["message" => "No rows updated. Check AgentID.", "AgentID" => $agentID]);
-					}
+					http_response_code(202);
 				} else {
 					http_response_code(501);
-					echo json_encode(["message" => "Failed to update votes", "error" => $stmt->error]);
 				}
-				
 				$stmt->close();
 			} else {
 				http_response_code(405);
-				echo json_encode(["message" => "Method not allowed"]);
 			}
 			break;
-		
+		case 'like':
+			// votes: serialize/ unserialize
+			// get data from db, unserialize votes => votes[]
+
+			// add logged in user id into votes[] if not exist
+			// serialize votes -> save into db
+
+			if ($_SERVER['REQUEST_METHOD'] === "POST") {
+				$agentID = $_POST['AgentID'];
+				$sql = "UPDATE agents SET Votes = Votes + 1 WHERE AgentID = ?";
+				$stmt = $conn->prepare($sql);
+				$stmt->bind_param("s", $agentID);
+
+				// Debugging output
+				echo "AgentID: " . $agentID . "\n";
+
+				if ($stmt->execute()) {
+					http_response_code(202);
+				} else {
+					http_response_code(501);
+				}
+				$stmt->close();
+			} else {
+				http_response_code(405);
+			}
+			break;
+
+		case 'unlike':
+
+			break;
 	}
 } else {
 	echo "Unable to Connect to Database";

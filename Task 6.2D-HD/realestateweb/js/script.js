@@ -37,7 +37,7 @@ const app = Vue.createApp({
   data: function () {
     return {
       isAuthenticated: false,
-      authenticatedUser: "",
+      authenticatedUser: "Guest",
       error: false,
       errorMSG: "",
     };
@@ -119,12 +119,14 @@ app.component("app-navbar", {
   computed: {
     isAuthenticated() {
       console.log(this.$root.isAuthenticated);
+      console.log(this.$root.authenticatedUser);
       return this.$root.isAuthenticated;
     },
   },
   methods: {
     logout() {
       this.$root.logout();
+      this.$root.authenticatedUser = "Guest";
     },
   },
 });

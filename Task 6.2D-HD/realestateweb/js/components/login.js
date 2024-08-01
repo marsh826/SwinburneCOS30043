@@ -3,8 +3,12 @@ const Login = {
     return {
       message: "",
       input: {
+        // PRESET DATA
         username: "admin",
         password: "vue123",
+
+        // username: "",
+        // password: "",
       },
       usernameErrors: [],
       passwordErrors: [],
@@ -58,6 +62,8 @@ const Login = {
           if (data == null) {
             self.message = "Username or Password is incorrect.";
           } else {
+            this.$root.authenticatedUser = this.input.username;
+            console.log(this.$root.authenticatedUser);
             this.$root.setAuthenticated(true);
             this.$router.replace({ name: "dashboard" });
           }
@@ -80,7 +86,7 @@ const Login = {
             <form
                 @submit="checkForm"
             >
-                <h1 class="text-center text-sm-start">User Login</h1>
+                <h1 class="text-center text-sm-start">Admin Login</h1>
                 <div class="mb-1">
                     <label for="username" class="form-label">Username</label>
                     <input v-model="input.username" type="username" class="form-control" id="username">

@@ -24,16 +24,14 @@ const DeleteProperties = {
       `,
   data: function () {
     return {
+      // PRESET DATA
       propertyID: "26",
+      //propertyID: "26",
       errors: "",
       messages: "",
     };
   },
   methods: {
-    // testMessages: function () {
-    //   this.errors = "Test error message";
-    //   this.messages = "Test success message";
-    // },
     checkForm: function () {
       this.errors = "";
       this.message = "";

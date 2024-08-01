@@ -64,10 +64,16 @@ const Agents = {
                     </div>
                     <br>
 
-                    <div class="d-inline">
-                      <i class="fa fa-thumbs-up fs-2 text"></i>
+                    <div v-if="$root.isAuthenticated" class="d-flex flex-row mb3">
+                      <button class="btn btn-primary" type="button" v-on:click="newVote(agent.AgentID)">
+                        <i class="fa fa-thumbs-up fs-3 text"></i>
+                      </button>
                       <i class="fs-3 text px-2">{{agent.Votes}}</i>
-                      <button class="btn btn-primary" type="button" v-on:click="newVote(agent.AgentID)">Up Vote</button>
+                    </div>
+
+                    <div v-else class="d-flex flex-row mb3">
+                      <i class="fa fa-thumbs-up fs-1 text"></i>
+                      <i class="fs-3 text px-2">{{agent.Votes}}</i>
                     </div>
                 </div>
               </div>
@@ -103,7 +109,7 @@ const Agents = {
     newVote: function (id) {
       // For debugging
       console.log("Agent ID fetched:" + id);
-      var updateApiURL = "resources/apis.php?action=updateVotes";
+      var updateApiURL = "resources/api_agents.php?action=updateVotes";
 
       const formData = new FormData();
       formData.append("AgentID", id);
@@ -126,6 +132,28 @@ const Agents = {
         .catch((error) => {
           console.log(error);
         });
+      
+    var self = this;
+    var viewApiURL = "resources/api_agents.php?action=agentsDisplay";
+
+    fetch(viewApiURL, {
+      method: "GET",
+      redirect: "error",
+      credentials: "include",
+    })
+      .then((response) => {
+        console.log(response.status);
+        return response.json(); //convert json body -> js object
+      })
+      .then((data) => {
+        self.team = data;
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        self.message = err;
+        self.isLoading = true;
+      });
     },
   },
 };
