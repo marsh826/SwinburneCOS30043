@@ -12,27 +12,7 @@ const Agents = {
     };
   },
   mounted() {
-    var self = this;
-    var viewApiURL = "resources/api_agents.php?action=agentsDisplay";
-
-    fetch(viewApiURL, {
-      method: "GET",
-      redirect: "error",
-      credentials: "include",
-    })
-      .then((response) => {
-        console.log(response.status);
-        return response.json(); //convert json body -> js object
-      })
-      .then((data) => {
-        self.team = data;
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-        self.message = err;
-        self.isLoading = true;
-      });
+    this.loadNewData();
   },
   template: `
   <p v-if="isLoading">{{message}}</p>
@@ -64,17 +44,32 @@ const Agents = {
                     </div>
                     <br>
 
-                    <div v-if="$root.isAuthenticated" class="d-flex flex-row mb3">
-                      <button class="btn btn-primary" type="button" v-on:click="newVote(agent.AgentID)">
-                        <i class="fa fa-thumbs-up fs-3 text"></i>
+                    <div v-if="$root.isAuthenticated && agent.Likes == $root.authenticatedUser" class="d-flex flex-row mb3">
+                      <button class="btn btn-primary" type="button" v-on:click="unLikeAgent(agent.AgentID, $root.authenticatedUser)">
+                        <span class="material-icons fs-2">
+                          thumb_up
+                        </span>
                       </button>
-                      <i class="fs-3 text px-2">{{agent.Votes}}</i>
+                      <i class="fs-4 text px-2">{{agent.Likes.length}}</i>
+                    </div>
+
+                    <div v-else-if="$root.isAuthenticated" class="d-flex flex-row mb3">
+                      <button class="btn btn-primary" type="button" v-on:click="newLikeAgent(agent.AgentID, $root.authenticatedUser)">
+                        <span class="material-icons-outlined fs-2 text">
+                          thumb_up
+                        </span>
+                      </button>
+                      <i class="fs-4 text px-2">{{agent.Likes.length}}</i>
                     </div>
 
                     <div v-else class="d-flex flex-row mb3">
-                      <i class="fa fa-thumbs-up fs-1 text"></i>
-                      <i class="fs-3 text px-2">{{agent.Votes}}</i>
+                        <span class="material-icons-outlined fs-2 text">
+                          thumb_up
+                        </span>
+                      <i class="fs-4 text px-2">{{agent.Likes.length}}</i>
                     </div>
+
+
                 </div>
               </div>
           </div>
@@ -106,13 +101,17 @@ const Agents = {
     clickCallBack: function (pageNum) {
       this.currentPage = Number(pageNum);
     },
-    newVote: function (id) {
+    newLikeAgent: function (id, authenticatedUser) {
       // For debugging
       console.log("Agent ID fetched:" + id);
-      var updateApiURL = "resources/api_agents.php?action=updateVotes";
+      var updateApiURL = "resources/api_agents.php?action=agentLike";
 
       const formData = new FormData();
       formData.append("AgentID", id);
+      formData.append("UserName", authenticatedUser);
+
+      console.log("AgentID: " + id);
+      console.log("UserName: " + authenticatedUser);
 
       const requestOptions = {
         method: "POST",
@@ -125,6 +124,7 @@ const Agents = {
           console.log(response.statusText);
           console.log(response.headers);
           console.log("Data Updated Successfully.");
+          this.loadNewData();
           if (!response.ok) {
             throw new Error("Network response error");
           }
@@ -132,28 +132,62 @@ const Agents = {
         .catch((error) => {
           console.log(error);
         });
-      
-    var self = this;
-    var viewApiURL = "resources/api_agents.php?action=agentsDisplay";
+    },
+    unLikeAgent: function (id, authenticatedUser) {
+      // For debugging
+      console.log("Agent ID fetched:" + id);
+      var updateApiURL = "resources/api_agents.php?action=agentUnLike";
 
-    fetch(viewApiURL, {
-      method: "GET",
-      redirect: "error",
-      credentials: "include",
-    })
-      .then((response) => {
-        console.log(response.status);
-        return response.json(); //convert json body -> js object
+      const formData = new FormData();
+      formData.append("AgentID", id);
+      formData.append("UserName", authenticatedUser);
+
+      console.log("AgentID: " + id);
+      console.log("UserName to remove from like list: " + authenticatedUser);
+
+      const requestOptions = {
+        method: "POST",
+        body: formData,
+      };
+      fetch(updateApiURL, requestOptions)
+        .then((response) => {
+          console.log(formData);
+          console.log(response.status);
+          console.log(response.statusText);
+          console.log(response.headers);
+          console.log("Data Updated Successfully.");
+          this.loadNewData();
+          if (!response.ok) {
+            throw new Error("Network response error");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    loadNewData: function () {
+      // Reload data
+      var self = this;
+      var viewApiURL = "resources/api_agents.php?action=agentsDisplay";
+
+      fetch(viewApiURL, {
+        method: "GET",
+        redirect: "error",
+        credentials: "include",
       })
-      .then((data) => {
-        self.team = data;
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-        self.message = err;
-        self.isLoading = true;
-      });
+        .then((response) => {
+          console.log(response.status);
+          return response.json(); //convert json body -> js object
+        })
+        .then((data) => {
+          self.team = data;
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          self.message = err;
+          self.isLoading = true;
+        });
     },
   },
 };

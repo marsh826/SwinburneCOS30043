@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 01, 2024 at 03:21 AM
+-- Generation Time: Aug 01, 2024 at 07:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,21 +34,21 @@ CREATE TABLE `agents` (
   `Phone` varchar(200) NOT NULL,
   `Email` varchar(250) NOT NULL,
   `LicenseNumber` varchar(250) NOT NULL,
-  `Votes` int(11) NOT NULL,
-  `AgentImage` longtext DEFAULT NULL
+  `AgentImage` longtext DEFAULT NULL,
+  `Likes` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `agents`
 --
 
-INSERT INTO `agents` (`AgentID`, `FirstName`, `LastName`, `Phone`, `Email`, `LicenseNumber`, `Votes`, `AgentImage`) VALUES
-(1, 'Danni', 'Korda', '106-899-6468', 'dkorda0@paginegialle.it', 'JTHHP5BC4F5423595', 38, './css/img/agent1.jpg'),
-(2, 'Cindee', 'Raubenheim', '357-890-8700', 'craubenheim1@businessinsider.com', 'WDCYC3HF5AX942987', 33, './css/img/agent5.jpg'),
-(3, 'Krystle', 'Dobbson', '679-759-2700', 'kdobbson2@sakura.ne.jp', '4T1BF1FK1EU445381', 49, './css/img/agent6.jpg'),
-(4, 'Eduino', 'Kuna', '502-322-2461', 'ekuna3@usatoday.com', '1C3CDFAA0DD812249', 39, './css/img/agent2.jpg'),
-(5, 'Nealson', 'Morville', '784-710-1930', 'nmorville4@netvibes.com', 'JM3ER2W36A0183549', 41, './css/img/agent3.jpg'),
-(6, 'Charlena', 'Castelyn', '612-226-8086', 'ccastelyn5@blogtalkradio.com', 'JN8AF5MR6DT841211', 35, './css/img/agent4.jpg');
+INSERT INTO `agents` (`AgentID`, `FirstName`, `LastName`, `Phone`, `Email`, `LicenseNumber`, `AgentImage`, `Likes`) VALUES
+(1, 'Danni', 'Korda', '106-899-6468', 'dkorda0@paginegialle.it', 'JTHHP5BC4F5423595', './css/img/agent1.jpg', 'YToxOntpOjA7czo1OiJhZG1pbiI7fQ=='),
+(2, 'Cindee', 'Raubenheim', '357-890-8700', 'craubenheim1@businessinsider.com', 'WDCYC3HF5AX942987', './css/img/agent5.jpg', 'YToxOntpOjA7czo1OiJhZG1pbiI7fQ=='),
+(3, 'Krystle', 'Dobbson', '679-759-2700', 'kdobbson2@sakura.ne.jp', '4T1BF1FK1EU445381', './css/img/agent6.jpg', 'YToxOntpOjA7czo1OiJhZG1pbiI7fQ=='),
+(4, 'Eduino', 'Kuna', '502-322-2461', 'ekuna3@usatoday.com', '1C3CDFAA0DD812249', './css/img/agent2.jpg', 'YToxOntpOjA7czo1OiJhZG1pbiI7fQ=='),
+(5, 'Nealson', 'Morville', '784-710-1930', 'nmorville4@netvibes.com', 'JM3ER2W36A0183549', './css/img/agent3.jpg', 'YToxOntpOjA7czo1OiJhZG1pbiI7fQ=='),
+(6, 'Charlena', 'Castelyn', '612-226-8086', 'ccastelyn5@blogtalkradio.com', 'JN8AF5MR6DT841211', './css/img/agent4.jpg', 'YToxOntpOjA7czo1OiJhZG1pbiI7fQ==');
 
 -- --------------------------------------------------------
 
