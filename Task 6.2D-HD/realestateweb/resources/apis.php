@@ -12,6 +12,33 @@ $i = 0;
 
 if ($conn) {
 	switch ($_GET['action']) {
+			////////////////////////////////////Login function///////////////////////////////////////////////
+		case 'login':
+			if ($_SERVER['REQUEST_METHOD'] === "POST") {
+				$username = $_POST['UserName'];
+				$password = $_POST['Password'];
+
+				// Assume you have a connection in $conn
+				$sql = "SELECT * FROM users WHERE UserName = ? AND Password = ?";
+				$stmt = $conn->prepare($sql);
+				$stmt->bind_param("ss", $username, $password);
+				$stmt->execute();
+				$result = $stmt->get_result();
+
+				$login = $result->fetch_assoc();
+
+				if (isset($login['UserName']) && isset($login['Password'])) {
+					http_response_code(202);
+				} else {
+					http_response_code(501);
+				}
+
+				$stmt->close();
+			} else {
+				http_response_code(405);
+			}
+			break;
+
 			/////////////////////////////////Display in BUY page///////////////////////////////////////
 		case 'buyDisplay':
 			$_SERVER['REQUEST_METHOD'] === "GET";
@@ -102,6 +129,8 @@ if ($conn) {
 					$fileActualExt = strtolower(end($fileExt));
 					$allowed = array('jpg', 'jpeg', 'png');
 
+					//This part will save the uploaded file onto the ./css/img folder 
+					//within this project source code folder.
 					if (in_array($fileActualExt, $allowed)) {
 						if ($fileError === 0) {
 							if ($fileSize < 10000000) { // Size should be in bytes, 10MB = 10000000 bytes, images are usually in KBs
@@ -193,6 +222,8 @@ if ($conn) {
 					$fileActualExt = strtolower(end($fileExt));
 					$allowed = array('jpg', 'jpeg', 'png');
 
+					//This part will save the uploaded file onto the ./css/img folder 
+					//within this project source code folder.
 					if (in_array($fileActualExt, $allowed)) {
 						if ($fileError === 0) {
 							if ($fileSize < 10000000) { // Size should be in bytes, 10MB = 10000000 bytes, images are usually in KBs
@@ -259,15 +290,24 @@ if ($conn) {
 		case 'deleteProperty':
 			if ($_SERVER['REQUEST_METHOD'] === "POST") {
 				$propertyID = $_POST['PropertyID'];
-				$sql = "DELETE FROM propertylisting	WHERE PropertyID = ?";
+				$sql = "SELECT * FROM propertylisting WHERE PropertyID = ?";
 				$stmt = $conn->prepare($sql);
 				$stmt->bind_param("s", $propertyID);
+				$stmt->execute();
+				$result = $stmt->get_result();
 
-				if ($stmt->execute()) {
-					http_response_code(202);
+
+				if ($result->num_rows > 0) {
+					$sql = "DELETE FROM propertylisting	WHERE PropertyID = ?";
+					$stmt = $conn->prepare($sql);
+					$stmt->bind_param("s", $propertyID);
+					if ($stmt->execute()) {
+						http_response_code(202);
+					}
 				} else {
-					http_response_code(501);
+					http_response_code(404);
 				}
+
 				$stmt->close();
 			} else {
 				http_response_code(405);

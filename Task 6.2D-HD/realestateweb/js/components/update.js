@@ -133,9 +133,9 @@ const UpdateProperties = {
                       <p>{{ errorsAgentID }}</p>
                   </div>                                         
                   <button type="submit" class="btn btn-primary">Submit</button>
-                  <div v-if="messages" class="alert alert-success mt-2">
-                      <p>{{ messages }}</p> 
-                  </div>
+                    <div v-if="messages" class="alert alert-secondary mt-2" role="alert">
+                        <p v-response="responseStatus">{{ messages }}</p> 
+                    </div>
               </form>
           </div>
       </div>
@@ -145,36 +145,39 @@ const UpdateProperties = {
   data: function () {
     return {
       //PRESET DATA for testing insert function
-      propertyID: "26",
-      address: "31 Ann Moore",
-      city: "Ballarat",
-      state: "Victoria",
-      postcode: "3040",
-      price: "200000",
-      squareM2: "3298",
-      bedrooms: "3",
-      bathrooms: "2",
-      garages: "2",
-      status: "Under Contract",
-      image: null,
-      agentID: "5",
-      messages: "",
+      // propertyID: "26",
+      // address: "31 Ann Moore",
+      // city: "Ballarat",
+      // state: "Victoria",
+      // postcode: "3040",
+      // price: "200000",
+      // squareM2: "3298",
+      // bedrooms: "3",
+      // bathrooms: "2",
+      // garages: "2",
+      // status: "Under Contract",
+      // image: null,
+      // agentID: "5",
+      // messages: "",
+
+      // HTTP response code: 
+      responseStatus: "",
 
       //EMPTY DATA for testing form validation
       // propertyID: "",
-      // address: "",
-      // city: "",
-      // state: "",
-      // postcode: "",
-      // price: "",
-      // squareM2: "",
-      // bedrooms: "",
-      // bathrooms: "",
-      // garages: "",
-      // status: "",
-      // image: null,
-      // agentID: "",
-      // messages: "",
+      address: "",
+      city: "",
+      state: "",
+      postcode: "",
+      price: "",
+      squareM2: "",
+      bedrooms: "",
+      bathrooms: "",
+      garages: "",
+      status: "",
+      image: null,
+      agentID: "",
+      messages: "",
 
       errorsPropertyID: "",
       errorsAddress: "", //error list
@@ -340,15 +343,24 @@ const UpdateProperties = {
       fetch(updateApiURL, requestOptions)
         .then((response) => {
           console.log(response.status);
-          console.log(response.statusText);
-          console.log(response.headers);
+          this.responseStatus = response.status;
+
+          //For Debug only
+          // console.log(response.statusText);
+          // console.log(response.headers);
+          if(response.status === 202){
           this.messages = "Data Updated Successfully.";
+          this.reloadView();
+          } else if(response.status === 501){
+            this.messages = "Server Error - Data Inserted Unsuccessfully";
+          }
           if (!response.ok) {
             throw new Error("Network response error");
           }
         })
         .catch((error) => {
           this.messages = "Server Error - Data Inserted Unsuccessfully";
+          console.log("ERROR") + error;
         });
     },
     formatDate: function (date) {

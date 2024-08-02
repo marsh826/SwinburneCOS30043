@@ -76,8 +76,9 @@ const Properties = {
             <div class="card-body">
               <h5 class="card-title">ListingPrice: &#36;{{numberWithCommas(house.ListingPrice)}}</h5>
 
-              <p class="card-text" v-if="house.Status == 'Available'"><small class="text-body-secondary">Status: <strong class="text-success">{{house.Status}}</strong></small></p>
-              <p class="card-text" v-if="house.Status == 'Under Contract'"><small class="text-body-secondary">Status: <strong class="text-danger">{{house.Status}}</strong></small></p>
+              <p><small>Status: <strong v-status="house.Status">{{house.Status}}</strong></small></p>
+
+
               <p class="card-text"><small class="text-body-secondary">Agent: <strong>{{house.FirstName}} {{house.LastName}}</strong></small></p>
               <div class="row">
                 <div class="col">

@@ -58,6 +58,42 @@ const app = Vue.createApp({
   },
 });
 
+//////////////////Custom Directives///////////////////
+//Change color of text according to Property Status 
+app.directive('status', {
+  created(el, binding, vnode){
+    // Update styling when the value changes
+    if (binding.value === 'Available') {
+      el.style.color = 'green'; 
+    } else if (binding.value === 'Under Contract') {
+      el.style.color = 'red';
+    }
+  }
+})
+//Change color of text according to HTTP response code
+app.directive('response', {
+  created(el, binding, vnode){
+    // Update styling when the value changes
+    if (binding.value === 202 || binding.value === 201) {
+      el.style.color = 'green'; 
+    }else if (binding.value === 404 || binding.value === 405   
+        || binding.value === 501) {
+      el.style.color = 'red';
+    }
+  },
+  updated(el, binding, vnode){
+    // Update styling when the value changes
+    if (binding.value === 202 || binding.value === 201) {
+      el.style.color = 'green'; 
+    }else if (binding.value === 404 || binding.value === 405   
+        || binding.value === 501) {
+      el.style.color = 'red';
+    }
+  },
+})
+
+
+// Nav bar
 app.component("app-navbar", {
   template: `
         <nav class="navbar navbar-expand-lg bg-primary">
@@ -117,6 +153,7 @@ app.component("app-navbar", {
         </nav>
       `,
   computed: {
+    // Check if user is logged in
     isAuthenticated() {
       console.log(this.$root.isAuthenticated);
       console.log(this.$root.authenticatedUser);
@@ -131,6 +168,7 @@ app.component("app-navbar", {
   },
 });
 
+// footer
 app.component("app-footer", {
   template: `
     <footer class="py-3 bg-primary bg-gradient mt-auto">

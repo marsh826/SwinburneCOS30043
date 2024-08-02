@@ -114,8 +114,8 @@ const InsertProperties = {
                         <p>{{ errorsAgentID }}</p>
                     </div>                                         
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <div v-if="messages" class="alert alert-success mt-2">
-                        <p>{{ messages }}</p> 
+                    <div v-if="messages" class="alert alert-secondary mt-2" role="alert">
+                        <p v-response="responseStatus">{{ messages }}</p> 
                     </div>
                 </form>
             </div>
@@ -125,35 +125,38 @@ const InsertProperties = {
   `,
   data: function () {
     return {
+      // HTTP response code: 
+      responseStatus: "",
+
       //PRESET DATA for testing insert function
-      address: "31 Ann Moore",
-      city: "Melbourne",
-      state: "Victoria",
-      postcode: "3000",
-      price: "100000",
-      squareM2: "2786",
-      bedrooms: "4",
-      bathrooms: "3",
-      garages: "2",
-      status: "Available",
-      image: null,
-      agentID: "3",
-      messages: "",
+      // address: "31 Ann Moore",
+      // city: "Melbourne",
+      // state: "Victoria",
+      // postcode: "3000",
+      // price: "100000",
+      // squareM2: "2786",
+      // bedrooms: "4",
+      // bathrooms: "3",
+      // garages: "2",
+      // status: "Available",
+      // image: null,
+      // agentID: "3",
+      // messages: "",
 
       //EMPTY DATA for testing form validation
-      // address: "",
-      // city: "",
-      // state: "",
-      // postcode: "",
-      // price: "",
-      // squareM2: "",
-      // bedrooms: "",
-      // bathrooms: "",
-      // garages: "",
-      // status: "",
-      // image: null,
-      // agentID: "",
-      // messages: "",
+      address: "",
+      city: "",
+      state: "",
+      postcode: "",
+      price: "",
+      squareM2: "",
+      bedrooms: "",
+      bathrooms: "",
+      garages: "",
+      status: "",
+      image: null,
+      agentID: "",
+      messages: "",
 
       errorsAddress: "", //error list
       errorsCity: "",
@@ -298,22 +301,31 @@ const InsertProperties = {
       //     console.log(`${pair[0]}: ${pair[1]}`);
       //   }
 
+      this.responseStatus = "";
+
       const requestOptions = {
         method: "POST",
         body: formData,
       };
       fetch(insertApiURL, requestOptions)
         .then((response) => {
+          this.responseStatus = response.status;
           console.log(response.status);
           console.log(response.statusText);
           console.log(response.headers);
-          this.messages = "Data Inserted Successfully.";
+          if(response.status === 202){
+            this.messages = "Data Inserted Successfully.";
+            this.reloadView();
+          } else if(response.status === 501){
+            this.messages = "Server Error - Data Inserted Unsuccessfully";
+          }
           if (!response.ok) {
             throw new Error("Network response error");
           }
         })
         .catch((error) => {
           this.messages = "Server Error - Data Inserted Unsuccessfully";
+          console.log("ERROR") + error;
         });
     },
     formatDate: function (date) {

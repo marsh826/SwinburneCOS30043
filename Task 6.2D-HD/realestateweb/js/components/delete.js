@@ -13,9 +13,9 @@ const DeleteProperties = {
                     <div v-if="errors.length" id="passwordHelpBlock" class="form-text text-danger">
                         <p>{{errors}}</p>    
                     </div>
-                  <div v-if="messages.length" class="alert alert-success mt-2">
-                     <p>{{ messages }}</p> 
-                  </div>
+                    <div v-if="messages.length" class="alert alert-secondary mt-2" role="alert">
+                        <p v-response="responseStatus">{{ messages }}</p> 
+                    </div>
                 </form>
               </div>
             </div>
@@ -25,10 +25,15 @@ const DeleteProperties = {
   data: function () {
     return {
       // PRESET DATA
-      propertyID: "26",
-      //propertyID: "26",
+      // propertyID: "26",
+
+      // EMPTY DATA for form validation
+      propertyID: "",
       errors: "",
       messages: "",
+      
+      // HTTP response code: 
+      responseStatus: null,
     };
   },
   methods: {
@@ -54,6 +59,7 @@ const DeleteProperties = {
       const deleteApiURL = "resources/apis.php?action=deleteProperty";
       const formData = new FormData();
       formData.append("PropertyID", this.propertyID);
+      this.responseStatus = null;
 
       const requestOptions = {
         method: "POST",
@@ -63,12 +69,20 @@ const DeleteProperties = {
       fetch(deleteApiURL, requestOptions)
         .then((response) => {
           console.log(response.status);
-          console.log(response.statusText);
-          console.log(response.headers);
-          this.messages = "Delete success!";
+          this.responseStatus = response.status;
+          // For Debug Only
+          // console.log(response.statusText);
+          // console.log(response.headers);
+          if(response.status === 202){
+            this.messages = "Delete success!";
+            this.reloadView();
+          } else if(response.status === 404){
+            this.messages = "Error: No such PropertyID found.";
+          }
         })
         .catch((error) => {
           this.errors = "Server Error - Data Deleted Unsuccessfully";
+          console.log("ERROR") + error;
         });
     },
   },

@@ -38,38 +38,39 @@ const Login = {
       }
 
       // prevent form submission
-      if (result === false) {
+      if (result === true) {
+        this.login();
+      } else {
         event.preventDefault();
       }
     },
     login() {
       var self = this;
+
+      const formData = new FormData();
+      formData.append("UserName", this.input.username);
+      formData.append("Password", this.input.password);
+
       const requestOptions = {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: this.input.username,
-          password: this.input.password,
-        }),
+        body: formData,
       };
-      fetch("resources/api_user.php/", requestOptions)
+      fetch("resources/apis.php?action=login", requestOptions)
         .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          if (data == null) {
-            self.message = "Username or Password is incorrect.";
-          } else {
-            this.$root.authenticatedUser = this.input.username;
+          // return response.json();
+          if(response.status === 202){
+             this.$root.authenticatedUser = this.input.username;
             console.log(this.$root.authenticatedUser);
             this.$root.setAuthenticated(true);
             this.$router.replace({ name: "dashboard" });
+          } else {
+            self.message = "Username or Password is incorrect.";
           }
         })
         .catch((error) => {
-          self.message = "Error: " + error;
+          // For debugging
+          console.log("Error: " + error)
+          self.message = "Error: Username or Password is not correct";
         });
     },
     reset() {
@@ -89,7 +90,7 @@ const Login = {
                 <h1 class="text-center text-sm-start">Admin Login</h1>
                 <div class="mb-1">
                     <label for="username" class="form-label">Username</label>
-                    <input v-model="input.username" type="username" class="form-control" id="username">
+                    <input v-model="input.username" type="username" class="form-control" id="username" >
                 </div>
                 <div v-if="usernameErrors.length" id="usernameHelpBlock" class="form-text text-danger">
                     <p v-for="error in usernameErrors">{{error}}</p>  
@@ -103,7 +104,7 @@ const Login = {
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <button type="submit" class="btn btn-primary" v-on:click="login()">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-warning" v-on:click="reset()">Reset</button>

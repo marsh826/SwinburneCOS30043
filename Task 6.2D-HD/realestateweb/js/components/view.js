@@ -12,26 +12,9 @@ const ViewProperties = {
     };
   },
   created() {
-    var self = this;
-    var viewApiURL = "resources/apis.php?action=dashboardDisplay";
-
-    fetch(viewApiURL, {
-      method: "GET",
-      redirect: "error",
-      credentials: "include",
-    })
-      .then((response) => {
-        console.log(response.status);
-        return response.json(); //convert json body -> js object
-      })
-      .then((data) => {
-        self.properties = data;
-      })
-      .catch((err) => {
-        console.log(err);
-        self.message = err;
-        this.isLoading = true;
-      });
+    this.loadDataView();
+    // Auto Refresh View Data Table every 3 seconds
+    setInterval(this.loadDataView, 3000);
   },
   template: `
     <p v-if="isLoading">{{message}}</p>
@@ -106,5 +89,27 @@ const ViewProperties = {
     numberWithCommas: function (x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
+    loadDataView: function(){
+      var self = this;
+      var viewApiURL = "resources/apis.php?action=dashboardDisplay";
+
+      fetch(viewApiURL, {
+        method: "GET",
+        redirect: "error",
+        credentials: "include",
+      })
+        .then((response) => {
+          console.log(response.status);
+          return response.json(); //convert json body -> js object
+        })
+        .then((data) => {
+          self.properties = data;
+        })
+        .catch((err) => {
+          console.log(err);
+          self.message = err;
+          this.isLoading = true;
+        });
+    }
   },
 };
