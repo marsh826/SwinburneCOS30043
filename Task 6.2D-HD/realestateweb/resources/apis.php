@@ -39,6 +39,26 @@ if ($conn) {
 			}
 			break;
 
+			/////////////////////////////////Register account//////////////////////////////////////////
+		case 'register':
+			if ($_SERVER['REQUEST_METHOD'] === "POST") {
+				$username = $_POST['UserName'];
+				$password = $_POST['Password'];
+
+				$sql = "INSERT INTO users(UserName, Password) VALUES(?, ?)";
+				$stmt = $conn->prepare($sql);
+				$stmt->bind_param("ss", $username, $password);
+
+				if ($stmt->execute()) {
+					http_response_code(202);
+				} else {
+					http_response_code(501);
+				}
+				$stmt->close();
+			} else {
+				http_response_code(405);
+			}
+			break;
 			/////////////////////////////////Display in BUY page///////////////////////////////////////
 		case 'buyDisplay':
 			$_SERVER['REQUEST_METHOD'] === "GET";

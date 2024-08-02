@@ -3,12 +3,13 @@ const Login = {
     return {
       message: "",
       input: {
-        // PRESET DATA
-        username: "admin",
-        password: "vue123",
+        // PRESET DATA for testing login function
+        // username: "admin",
+        // password: "vuejs-123",
 
-        // username: "",
-        // password: "",
+        // EMPTY DATA for testing form validation
+        username: "",
+        password: "",
       },
       usernameErrors: [],
       passwordErrors: [],
@@ -23,11 +24,6 @@ const Login = {
       // USERNAME CHECK
       if (!this.input.username) {
         this.usernameErrors.push("Username required");
-        result = false;
-      } else if (this.input.username.length < 3) {
-        this.usernameErrors.push(
-          "Username must contain at least three characters"
-        );
         result = false;
       }
 
@@ -57,7 +53,6 @@ const Login = {
       };
       fetch("resources/apis.php?action=login", requestOptions)
         .then((response) => {
-          // return response.json();
           if(response.status === 202){
              this.$root.authenticatedUser = this.input.username;
             console.log(this.$root.authenticatedUser);
@@ -69,7 +64,7 @@ const Login = {
         })
         .catch((error) => {
           // For debugging
-          console.log("Error: " + error)
+          // console.log("Error: " + error)
           self.message = "Error: Username or Password is not correct";
         });
     },

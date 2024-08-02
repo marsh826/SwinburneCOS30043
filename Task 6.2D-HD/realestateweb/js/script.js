@@ -22,9 +22,9 @@ const router = VueRouter.createRouter({
       name: "home",
     },
     {
-      path: "/login",
-      component: Login,
-      name: "login",
+      path: "/authenticate",
+      component: AuthenticationTabs,
+      name: "authenticate",
     },
     {
       path: "/logout",
@@ -53,7 +53,7 @@ const app = Vue.createApp({
     },
     logout() {
       this.isAuthenticated = false;
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: "authenticate" });
     },
   },
 });
@@ -143,7 +143,7 @@ app.component("app-navbar", {
             </div>
             <div class="d-flex" v-else>
                 <button class="btn btn-info me-2" type="button">
-                  <router-link to="/login"
+                  <router-link to="/authenticate"
                     class="link-offset-2 link-underline link-underline-opacity-0"
                   >Login  
                   </router-link>
@@ -190,6 +190,8 @@ app.component("app-view", ViewProperties);
 app.component("app-insert", InsertProperties);
 app.component("app-delete", DeleteProperties);
 app.component("app-update", UpdateProperties);
+app.component("app-login", Login);
+app.component("app-register", Register);
 
 app.use(router);
 app.mount("#app");
