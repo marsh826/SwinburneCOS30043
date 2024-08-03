@@ -1,0 +1,15 @@
+Required Technologies to run this project:
+XAMPP
+
+Frameworks used in this project:
+VueJS and Bootstrap
+
+Installation:
+1. After installing and running Apache and MySQL(must be port 3306) in XAMPP Control Panel, copy the "realestateweb" folder that contains the source code to "./xampp/htdocs/" folder.
+2. Go into web browser and type "localhost/phpmyadmin/" to go to the database.
+3. Create a database with the name "realestate" and import "realestate.sql" file into the same database.
+4. After the file has been successfully imported into the database, go into web browser and type "localhost/realestateweb/" to go to the web page.
+5. The project is now loaded and you can test out the functionalities there. 
+
+LINK TO YOUTUBE VIDEO DEMO:
+https://youtu.be/HjoIwsBK6DE

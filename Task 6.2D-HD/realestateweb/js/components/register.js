@@ -1,5 +1,5 @@
 const Register = {
-    template: `
+  template: `
         <div class="d-flex justify-content-center align-items-center min-vh-76">
         <div class="w-100 box-400">
             <form
@@ -43,22 +43,22 @@ const Register = {
         </div>
     </div>
     `,
-    data() {
+  data() {
     return {
       message: "",
       input: {
-        // HTTP response code: 
+        // HTTP response code:
         responseStatus: "",
 
         // PRESET DATA to test insert fucntion
-        // usernameReg: "admin2",
-        // passwordReg: "vuejs-456",
-        // passConfirm: "vuejs-456",
+        usernameReg: "admin2",
+        passwordReg: "vuejs-456",
+        passConfirm: "vuejs-456",
 
         // EMPTY DATA to test validation
-        usernameReg: "",
-        passwordReg: "",
-        passConfirm: "",
+        // usernameReg: "",
+        // passwordReg: "",
+        // passConfirm: "",
       },
       usernameErrors: [],
       passwordErrors: [],
@@ -67,47 +67,56 @@ const Register = {
   },
   methods: {
     checkForm: function (event) {
-        this.usernameErrors = [];
-        this.passwordErrors = [];
-        this.passConfirmErrors = [];
-        let result = true;
+      this.usernameErrors = [];
+      this.passwordErrors = [];
+      this.passConfirmErrors = [];
+      let result = true;
 
-        // USERNAME CHECK
-        if (!this.input.usernameReg) {
-            this.usernameErrors.push("Username required");
-            result = false;
-        } else if (this.input.usernameReg.length < 3) {
-            this.usernameErrors.push(
-            "Username must contain at least three characters"
-            );
-            result = false;
-        }
+      // USERNAME CHECK
+      if (!this.input.usernameReg) {
+        this.usernameErrors.push("Username required");
+        result = false;
+      } else if (this.input.usernameReg.length < 3) {
+        this.usernameErrors.push(
+          "Username must contain at least three characters"
+        );
+        result = false;
+      }
 
-        // PASSWORD CHECK
-        if (!this.input.passwordReg.trim()) {
+      // PASSWORD CHECK
+      if (!this.input.passwordReg.trim()) {
         this.passwordErrors.push("Password required");
         result = false;
-        } else if (this.input.passwordReg.trim().length < 8) {
-        this.passwordErrors.push("Password must contain at least eight characters");
+      } else if (this.input.passwordReg.trim().length < 8) {
+        this.passwordErrors.push(
+          "Password must contain at least eight characters"
+        );
         result = false;
-        } else if (!this.specialCharCount(this.input.passwordReg.trim())) {
-        this.passwordErrors.push("Password must contain at least 1 special character");
+      } else if (!this.specialCharCount(this.input.passwordReg.trim())) {
+        this.passwordErrors.push(
+          "Password must contain at least 1 special character"
+        );
         result = false;
-        }
+      }
 
-        // PASSWORD CONFIRM CHECK
-        // Password Confirmation Check
-        if (!this.input.passConfirm || this.input.passConfirm !== this.input.passwordReg) {
-        this.passConfirmErrors.push("Confirmation failed: Passwords do not match");
+      // PASSWORD CONFIRM CHECK
+      // Password Confirmation Check
+      if (
+        !this.input.passConfirm ||
+        this.input.passConfirm !== this.input.passwordReg
+      ) {
+        this.passConfirmErrors.push(
+          "Confirmation failed: Passwords do not match"
+        );
         result = false;
-        }
+      }
 
-        // prevent form submission
-        if (result === true) {
+      // prevent form submission
+      if (result === true) {
         this.register();
-        } else {
+      } else {
         event.preventDefault();
-        }
+      }
     },
     register() {
       var self = this;
@@ -116,32 +125,31 @@ const Register = {
       formData.append("UserName", this.input.usernameReg);
       formData.append("Password", this.input.passwordReg);
 
-      
       const requestOptions = {
-          method: "POST",
-          body: formData,
-        };
-        fetch("resources/apis.php?action=register", requestOptions)
+        method: "POST",
+        body: formData,
+      };
+      fetch("resources/apis.php?action=register", requestOptions)
         .then((response) => {
-            this.responseStatus = response.status;
-            if(response.status === 202){
-                self.message = "Account registration success!";
-                setTimeout(() => {
-                    this.$router.replace({ name: "home" });
-                }, 2500);
-            } else if(response.status === 501) {
-                self.message = "Server Error: Account registration failed.";
-            }
+          this.responseStatus = response.status;
+          if (response.status === 202) {
+            self.message = "Account registration success!";
+            setTimeout(() => {
+              this.$router.replace({ name: "home" });
+            }, 3000);
+          } else if (response.status === 501) {
+            self.message = "Server Error: Account registration failed.";
+          }
         })
         .catch((error) => {
           // For debugging
-        //   console.log("Error: " + error)
+          //   console.log("Error: " + error)
           self.message = "Server Error: Account registration failed.";
         });
     },
     specialCharCount(input) {
-    const specialChar = /[!@#$%^&*(),.?":{}|<>-]/;
-    return specialChar.test(input);
+      const specialChar = /[!@#$%^&*(),.?":{}|<>-]/;
+      return specialChar.test(input);
     },
 
     reset() {
@@ -155,4 +163,3 @@ const Register = {
     },
   },
 };
-

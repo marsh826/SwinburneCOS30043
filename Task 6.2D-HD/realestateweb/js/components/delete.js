@@ -25,14 +25,15 @@ const DeleteProperties = {
   data: function () {
     return {
       // PRESET DATA
-      // propertyID: "26",
+      propertyID: "26",
 
       // EMPTY DATA for form validation
-      propertyID: "",
+      // propertyID: "",
+
       errors: "",
       messages: "",
-      
-      // HTTP response code: 
+
+      // HTTP response code:
       responseStatus: null,
     };
   },
@@ -73,16 +74,16 @@ const DeleteProperties = {
           // For Debug Only
           // console.log(response.statusText);
           // console.log(response.headers);
-          if(response.status === 202){
+          if (response.status === 202) {
             this.messages = "Delete success!";
-            this.reloadView();
-          } else if(response.status === 404){
+            this.reloadView;
+          } else if (response.status === 404) {
             this.messages = "Error: No such PropertyID found.";
           }
         })
         .catch((error) => {
           this.errors = "Server Error - Data Deleted Unsuccessfully";
-          console.log("ERROR") + error;
+          console.log("ERROR: " + error);
         });
     },
   },

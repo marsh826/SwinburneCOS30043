@@ -145,39 +145,39 @@ const UpdateProperties = {
   data: function () {
     return {
       //PRESET DATA for testing insert function
-      // propertyID: "26",
-      // address: "31 Ann Moore",
-      // city: "Ballarat",
-      // state: "Victoria",
-      // postcode: "3040",
-      // price: "200000",
-      // squareM2: "3298",
-      // bedrooms: "3",
-      // bathrooms: "2",
-      // garages: "2",
-      // status: "Under Contract",
-      // image: null,
-      // agentID: "5",
-      // messages: "",
+      propertyID: "26",
+      address: "31 Ann Moore",
+      city: "Ballarat",
+      state: "Victoria",
+      postcode: "3040",
+      price: "200000",
+      squareM2: "3298",
+      bedrooms: "3",
+      bathrooms: "2",
+      garages: "2",
+      status: "Under Contract",
+      image: null,
+      agentID: "5",
+      messages: "",
 
-      // HTTP response code: 
+      // HTTP response code:
       responseStatus: "",
 
       //EMPTY DATA for testing form validation
       // propertyID: "",
-      address: "",
-      city: "",
-      state: "",
-      postcode: "",
-      price: "",
-      squareM2: "",
-      bedrooms: "",
-      bathrooms: "",
-      garages: "",
-      status: "",
-      image: null,
-      agentID: "",
-      messages: "",
+      // address: "",
+      // city: "",
+      // state: "",
+      // postcode: "",
+      // price: "",
+      // squareM2: "",
+      // bedrooms: "",
+      // bathrooms: "",
+      // garages: "",
+      // status: "",
+      // image: null,
+      // agentID: "",
+      // messages: "",
 
       errorsPropertyID: "",
       errorsAddress: "", //error list
@@ -348,10 +348,10 @@ const UpdateProperties = {
           //For Debug only
           // console.log(response.statusText);
           // console.log(response.headers);
-          if(response.status === 202){
-          this.messages = "Data Updated Successfully.";
-          this.reloadView();
-          } else if(response.status === 501){
+          if (response.status === 202) {
+            this.messages = "Data Updated Successfully.";
+            this.reloadView;
+          } else if (response.status === 501) {
             this.messages = "Server Error - Data Inserted Unsuccessfully";
           }
           if (!response.ok) {
@@ -360,7 +360,7 @@ const UpdateProperties = {
         })
         .catch((error) => {
           this.messages = "Server Error - Data Inserted Unsuccessfully";
-          console.log("ERROR") + error;
+          console.log("ERROR: " + error);
         });
     },
     formatDate: function (date) {

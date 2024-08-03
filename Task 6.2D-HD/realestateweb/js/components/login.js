@@ -4,12 +4,12 @@ const Login = {
       message: "",
       input: {
         // PRESET DATA for testing login function
-        // username: "admin",
-        // password: "vuejs-123",
+        username: "admin",
+        password: "vuejs-123",
 
         // EMPTY DATA for testing form validation
-        username: "",
-        password: "",
+        // username: "",
+        // password: "",
       },
       usernameErrors: [],
       passwordErrors: [],
@@ -53,8 +53,8 @@ const Login = {
       };
       fetch("resources/apis.php?action=login", requestOptions)
         .then((response) => {
-          if(response.status === 202){
-             this.$root.authenticatedUser = this.input.username;
+          if (response.status === 202) {
+            this.$root.authenticatedUser = this.input.username;
             console.log(this.$root.authenticatedUser);
             this.$root.setAuthenticated(true);
             this.$router.replace({ name: "dashboard" });
