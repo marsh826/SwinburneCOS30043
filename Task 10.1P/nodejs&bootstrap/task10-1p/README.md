@@ -1,4 +1,4 @@
-# task10-1p
+# task10-1
 
 ## Project setup
 ```
